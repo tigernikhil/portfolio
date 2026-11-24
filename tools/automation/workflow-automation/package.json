@@ -1,0 +1,14 @@
+{
+  "name": "@platform/tool-automation-workflow-automation",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@platform/contracts": "workspace:*",
+    "@platform/tool-sdk": "workspace:*",
+    "zod": ">=3.23.0"
+  },
+  "devDependencies": {
+    "vitest": ">=1.6.0"
+  }
+}

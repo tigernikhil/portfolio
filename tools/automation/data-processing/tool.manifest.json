@@ -1,0 +1,41 @@
+{
+  "id": "automation.data-processing",
+  "name": "Batch Data Processor",
+  "version": "1.0.0",
+  "description": "Filter, transform, aggregate, and export structured tabular data streams.",
+  "category": "automation",
+  "visibility": "authenticated",
+  "execution": {
+    "type": "job",
+    "reference": "data-processor-engine"
+  },
+  "capabilities": [
+    "automation-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

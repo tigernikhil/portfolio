@@ -1,0 +1,41 @@
+{
+  "id": "developer.api-utilities",
+  "name": "API Developer Utilities",
+  "version": "1.0.0",
+  "description": "Curl to fetch generator, JWT decoder, header inspector, and JSON schema validator.",
+  "category": "developer",
+  "visibility": "public",
+  "execution": {
+    "type": "embedded",
+    "reference": "api-utils-engine"
+  },
+  "capabilities": [
+    "developer-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

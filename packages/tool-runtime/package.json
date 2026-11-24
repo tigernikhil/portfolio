@@ -1,0 +1,11 @@
+{
+  "name": "@platform/tool-runtime",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "dependencies": {
+    "@platform/contracts": "workspace:*",
+    "@platform/tool-sdk": "workspace:*",
+    "@platform/tool-registry": "workspace:*"
+  }
+}

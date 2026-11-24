@@ -1,0 +1,41 @@
+{
+  "id": "finance.stock-pnl",
+  "name": "Stock P&L Analyzer",
+  "version": "1.0.0",
+  "description": "Analyze stock trade books, calculate realized & unrealized capital gains (STCG/LTCG).",
+  "category": "finance",
+  "visibility": "authenticated",
+  "execution": {
+    "type": "embedded",
+    "reference": "stock-pnl-engine"
+  },
+  "capabilities": [
+    "finance-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

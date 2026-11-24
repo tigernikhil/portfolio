@@ -1,0 +1,41 @@
+{
+  "id": "productivity.document-extractor",
+  "name": "Structured Document Extractor",
+  "version": "1.0.0",
+  "description": "Extract structured entities, key-value pairs, dates, and tables from raw text documents.",
+  "category": "productivity",
+  "visibility": "public",
+  "execution": {
+    "type": "embedded",
+    "reference": "doc-extractor-engine"
+  },
+  "capabilities": [
+    "productivity-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

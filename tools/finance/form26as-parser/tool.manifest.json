@@ -1,0 +1,41 @@
+{
+  "id": "finance.form26as-parser",
+  "name": "Form 26AS Tax Credit Parser",
+  "version": "1.0.0",
+  "description": "Parse Form 26AS TDS credits, tax payments, and AIS/TIS cross-verification securely.",
+  "category": "finance",
+  "visibility": "authenticated",
+  "execution": {
+    "type": "embedded",
+    "reference": "form26as-engine"
+  },
+  "capabilities": [
+    "finance-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

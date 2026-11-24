@@ -1,0 +1,41 @@
+{
+  "id": "productivity.pdf-analyzer",
+  "name": "PDF Structure & Text Analyzer",
+  "version": "1.0.0",
+  "description": "Inspect PDF structure, extract metadata, headings, tables, and word frequency counts.",
+  "category": "productivity",
+  "visibility": "public",
+  "execution": {
+    "type": "embedded",
+    "reference": "pdf-analyzer-engine"
+  },
+  "capabilities": [
+    "productivity-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

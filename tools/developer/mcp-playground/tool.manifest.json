@@ -1,0 +1,41 @@
+{
+  "id": "developer.mcp-playground",
+  "name": "Model Context Protocol Playground",
+  "version": "1.0.0",
+  "description": "Inspect MCP server capabilities, test tool calls, and debug schema payloads in a safe environment.",
+  "category": "developer",
+  "visibility": "restricted",
+  "execution": {
+    "type": "mcp",
+    "reference": "mcp-gateway"
+  },
+  "capabilities": [
+    "developer-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

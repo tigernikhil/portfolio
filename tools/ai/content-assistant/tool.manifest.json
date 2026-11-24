@@ -1,0 +1,41 @@
+{
+  "id": "ai.content-assistant",
+  "name": "AI Technical Content Assistant",
+  "version": "1.0.0",
+  "description": "Technical blog writing assistant, converting engineering notes into structured dev articles.",
+  "category": "ai",
+  "visibility": "authenticated",
+  "execution": {
+    "type": "local",
+    "reference": "ollama.qwen2.5:3b"
+  },
+  "capabilities": [
+    "ai-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

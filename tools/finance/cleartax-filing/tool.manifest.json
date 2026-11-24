@@ -1,0 +1,122 @@
+{
+  "id": "tool-finance-cleartax-filing",
+  "name": "ClearTax Filing & Computation Engine",
+  "version": "1.0.0",
+  "description": "Enterprise Indian Income Tax calculation, AIS/TIS ingestion, dual regime optimization (Old vs New), ITR generation, and transactional email filing confirmation linked to /Users/admin/Documents/Projects/ClearTax.",
+  "category": "finance",
+  "visibility": "authenticated",
+  "execution": {
+    "type": "embedded",
+    "reference": "/Users/admin/Documents/Projects/ClearTax"
+  },
+  "capabilities": [
+    "itr-filing",
+    "tax-computation",
+    "old-vs-new-regime",
+    "ais-tis-ingestion",
+    "email-confirmation",
+    "user-auth"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pan": {
+        "type": "string"
+      },
+      "assessmentYear": {
+        "type": "string"
+      },
+      "salaryIncome": {
+        "type": "number"
+      },
+      "capitalGains": {
+        "type": "number",
+        "optional": true
+      },
+      "housePropertyIncome": {
+        "type": "number",
+        "optional": true
+      },
+      "otherIncome": {
+        "type": "number",
+        "optional": true
+      },
+      "section80C": {
+        "type": "number",
+        "optional": true
+      },
+      "section80D": {
+        "type": "number",
+        "optional": true
+      },
+      "hra": {
+        "type": "number",
+        "optional": true
+      },
+      "userEmail": {
+        "type": "string",
+        "optional": true
+      },
+      "userName": {
+        "type": "string",
+        "optional": true
+      }
+    },
+    "required": [
+      "pan",
+      "assessmentYear",
+      "salaryIncome"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "filingId": {
+        "type": "string"
+      },
+      "pan": {
+        "type": "string"
+      },
+      "assessmentYear": {
+        "type": "string"
+      },
+      "oldRegime": {
+        "type": "object"
+      },
+      "newRegime": {
+        "type": "object"
+      },
+      "recommendedRegime": {
+        "type": "string",
+        "enum": [
+          "old",
+          "new"
+        ]
+      },
+      "taxSavings": {
+        "type": "number"
+      },
+      "itrXmlGenerated": {
+        "type": "boolean"
+      },
+      "emailConfirmationSent": {
+        "type": "boolean"
+      },
+      "emailDetails": {
+        "type": "object",
+        "optional": true
+      }
+    },
+    "required": [
+      "filingId",
+      "pan",
+      "assessmentYear",
+      "oldRegime",
+      "newRegime",
+      "recommendedRegime",
+      "taxSavings",
+      "itrXmlGenerated",
+      "emailConfirmationSent"
+    ]
+  }
+}

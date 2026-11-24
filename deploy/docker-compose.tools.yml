@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  flight-tracker-backend:
+    image: eclipse-temurin:21-jre-alpine
+    environment:
+      - POSTGRES_URL
+      - KAFKA_BOOTSTRAP_SERVERS
+      - SMTP_USER
+      - SMTP_PASSWORD
+    ports:
+      - "8080:8080"
+    networks:
+      - platform-network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  flight-scraper-service:
+    image: mcr.microsoft.com/playwright:v1.40.0-focal
+    environment:
+      - KAFKA_BOOTSTRAP_SERVERS
+    networks:
+      - platform-network
+
+  cleartax-service:
+    image: node:20-alpine
+    environment:
+      - PORT=5000
+      - DATABASE_URL
+      - JWT_SECRET
+      - SMTP_USER
+      - SMTP_PASSWORD
+    ports:
+      - "5000:5000"
+    networks:
+      - platform-network
+
+  platform-tool-runtime:
+    image: node:20-alpine
+    environment:
+      - PORT=3000
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    networks:
+      - platform-network
+
+networks:
+  platform-network:
+
+volumes:
+  pgdata:
+  kafkadata:

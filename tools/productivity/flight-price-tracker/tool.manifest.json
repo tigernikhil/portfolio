@@ -1,0 +1,110 @@
+{
+  "id": "tool-productivity-flight-price-tracker",
+  "name": "Flight Price Tracker & Alert Engine",
+  "version": "1.0.0",
+  "description": "Event-driven flight tracking, price prediction, date suggestion, and email alert dispatch engine connected to external microservices at /Users/admin/Documents/FlightPriceTracker.",
+  "category": "productivity",
+  "visibility": "authenticated",
+  "execution": {
+    "type": "api",
+    "reference": "/Users/admin/Documents/FlightPriceTracker"
+  },
+  "capabilities": [
+    "flight-tracking",
+    "price-prediction",
+    "email-alerting",
+    "route-analytics",
+    "user-auth"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "track_route",
+          "predict_price",
+          "check_alerts"
+        ]
+      },
+      "origin": {
+        "type": "string"
+      },
+      "destination": {
+        "type": "string"
+      },
+      "departureDate": {
+        "type": "string"
+      },
+      "returnDate": {
+        "type": "string",
+        "optional": true
+      },
+      "targetPrice": {
+        "type": "number",
+        "optional": true
+      },
+      "currency": {
+        "type": "string",
+        "optional": true
+      },
+      "userEmail": {
+        "type": "string",
+        "optional": true
+      }
+    },
+    "required": [
+      "action",
+      "origin",
+      "destination",
+      "departureDate"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "routeId": {
+        "type": "string"
+      },
+      "currentPrice": {
+        "type": "number"
+      },
+      "predictedDropProbability": {
+        "type": "number"
+      },
+      "recommendation": {
+        "type": "string",
+        "enum": [
+          "buy_now",
+          "wait",
+          "monitor"
+        ]
+      },
+      "alertTriggered": {
+        "type": "boolean"
+      },
+      "emailSent": {
+        "type": "boolean"
+      },
+      "emailDetails": {
+        "type": "object",
+        "optional": true
+      },
+      "cheaperAlternativeDates": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "optional": true
+      }
+    },
+    "required": [
+      "routeId",
+      "currentPrice",
+      "predictedDropProbability",
+      "recommendation",
+      "alertTriggered",
+      "emailSent"
+    ]
+  }
+}

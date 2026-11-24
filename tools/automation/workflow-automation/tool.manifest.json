@@ -1,0 +1,41 @@
+{
+  "id": "automation.workflow-automation",
+  "name": "Workflow Automation Runner",
+  "version": "1.0.0",
+  "description": "Execute sequential and parallel multi-step task DAGs with state preservation.",
+  "category": "automation",
+  "visibility": "restricted",
+  "execution": {
+    "type": "job",
+    "reference": "workflow-engine"
+  },
+  "capabilities": [
+    "automation-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "ai.story-generator",
+  "name": "AI Micro-Drama Story Generator",
+  "version": "1.0.0",
+  "description": "Generate dynamic psychological horror and suspense storylines with progressive tension.",
+  "category": "ai",
+  "visibility": "public",
+  "execution": {
+    "type": "local",
+    "reference": "ollama.qwen2.5:3b"
+  },
+  "capabilities": [
+    "ai-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}

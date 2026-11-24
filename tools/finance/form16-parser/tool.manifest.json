@@ -1,0 +1,41 @@
+{
+  "id": "finance.form16-parser",
+  "name": "Form 16 Tax Parser",
+  "version": "1.0.0",
+  "description": "Extract and parse Part A & Part B of Indian Income Tax Form 16 PDF/text securely with zero retention.",
+  "category": "finance",
+  "visibility": "authenticated",
+  "execution": {
+    "type": "embedded",
+    "reference": "form16-engine"
+  },
+  "capabilities": [
+    "finance-processing",
+    "data-validation"
+  ],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "content": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "content"
+    ]
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "success": {
+        "type": "boolean"
+      },
+      "result": {
+        "type": "object"
+      }
+    },
+    "required": [
+      "success"
+    ]
+  }
+}
