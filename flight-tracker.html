@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flight Price Tracker & Predictor | Nikhil Jain Platform</title>
+  <meta name="description" content="Predictive airfare drop probability using decay curve analytics, Playwright web scrapers, Kafka event streams, and automated price drop alerts.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            obsidian: '#080c14',
+            surface: '#0f172a',
+            surfaceHover: '#1e293b',
+            accent: '#6366f1',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #080c14; color: #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-panel { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.3s ease; }
+    .gradient-text { background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+  <script src="assets/shared.js"></script>
+</head>
+<body class="min-h-screen text-slate-200">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-blue-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+            ✈️
+          </div>
+          <div>
+            <div class="font-bold text-white tracking-tight flex items-center gap-2">
+              Flight Price Tracker
+              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/30">@tools/flight-price-tracker</span>
+            </div>
+            <div class="text-[11px] text-slate-400">Predictive Airfare Decay Curves & Alerts</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-indigo-400 transition">Dashboard</a>
+        <a href="portfolio.html" class="hover:text-indigo-400 transition">Portfolio</a>
+        <a href="video-studio.html" class="hover:text-indigo-400 transition">AI Video Studio</a>
+        <a href="cleartax.html" class="hover:text-indigo-400 transition">ClearTax Tool</a>
+        <a href="flight-tracker.html" class="text-indigo-400 font-semibold border-b-2 border-indigo-500 pb-0.5">Flight Tracker</a>
+        <a href="skills.html" class="hover:text-indigo-400 transition">Learned Skills</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">
+          Backend Port :8080
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN FLIGHT TRACKER CONTAINER -->
+  <main class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    
+    <div class="mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-500/10 text-indigo-300 border border-indigo-500/30 mb-2">
+        <span>✈️</span> Kafka Streaming & Predictive Price Analytics
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight gradient-text">
+        Flight Price Tracker & Prediction Engine
+      </h1>
+      <p class="text-slate-400 text-sm mt-1 max-w-3xl">
+        Calculates time-to-departure decay curve price drop probabilities, executes Playwright multi-portal airfare scrapers, surfaces flexible dates with >15% savings, and dispatches real-time transactional alert emails.
+      </p>
+    </div>
+
+    <!-- MAIN TWO-COLUMN WORKSPACE -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- LEFT: ROUTE & PARAMETER INPUTS (6 Cols) -->
+      <div class="lg:col-span-6 space-y-6">
+        
+        <!-- Popular Route Chips -->
+        <div class="glass-panel p-5 rounded-2xl border border-slate-800">
+          <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-2.5">
+            Quick Route Presets
+          </label>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+            <button onclick="setRoute('JFK', 'LAX', 380, 350)" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center font-mono">
+              <span class="font-bold text-white block">JFK &rarr; LAX</span>
+              <span class="text-[10px] text-slate-400">$380 ($350 target)</span>
+            </button>
+            <button onclick="setRoute('BOM', 'DEL', 5500, 4800, 'INR')" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center font-mono">
+              <span class="font-bold text-white block">BOM &rarr; DEL</span>
+              <span class="text-[10px] text-slate-400">₹5,500 (₹4.8k target)</span>
+            </button>
+            <button onclick="setRoute('LHR', 'DXB', 420, 390)" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center font-mono">
+              <span class="font-bold text-white block">LHR &rarr; DXB</span>
+              <span class="text-[10px] text-slate-400">$420 ($390 target)</span>
+            </button>
+            <button onclick="setRoute('SFO', 'SIN', 890, 780)" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-700 text-center font-mono">
+              <span class="font-bold text-white block">SFO &rarr; SIN</span>
+              <span class="text-[10px] text-slate-400">$890 ($780 target)</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Route Details Form -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Flight Parameters</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Origin Code (IATA)</label>
+              <input id="originInput" type="text" value="JFK" maxlength="3" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono uppercase focus:outline-none focus:border-indigo-500" oninput="calculateFlightPrediction()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Destination Code (IATA)</label>
+              <input id="destInput" type="text" value="LAX" maxlength="3" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono uppercase focus:outline-none focus:border-indigo-500" oninput="calculateFlightPrediction()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Departure Date</label>
+              <input id="depDateInput" type="date" value="2026-12-15" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-indigo-500" onchange="calculateFlightPrediction()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Return Date (Optional)</label>
+              <input id="retDateInput" type="date" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-indigo-500">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Current Airfare ($ / ₹)</label>
+              <input id="currentPriceInput" type="number" value="380" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-indigo-500" oninput="calculateFlightPrediction()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Target Alert Price ($ / ₹)</label>
+              <input id="targetPriceInput" type="number" value="350" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-indigo-500" oninput="calculateFlightPrediction()">
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-400 mb-1">Alert Notification Email</label>
+              <input id="alertEmailInput" type="email" value="nikhilrawnka@gmail.com" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-indigo-500">
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-slate-800 flex flex-wrap items-center gap-3">
+            <button onclick="saveActiveAlert()" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+              <span>Set Price Drop Alert</span>
+            </button>
+            <button onclick="triggerSimulatedEmailAlert()" class="py-2.5 px-4 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+              Trigger Test Email
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: PREDICTION GAUGE & ALTERNATIVE DATES (6 Cols) -->
+      <div class="lg:col-span-6 space-y-6">
+        
+        <!-- Decay Curve Gauge & Recommendation -->
+        <div class="glass-panel p-6 rounded-2xl border border-indigo-500/30 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Predictive Price Recommendation</h3>
+            <span id="recommendationBadge" class="px-3 py-1 rounded-full text-xs font-bold font-mono bg-indigo-500/20 text-indigo-400 border border-indigo-500/40">
+              WAIT (48% DROP PROBABILITY)
+            </span>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+            <div class="p-4 rounded-xl bg-slate-900 border border-slate-800 text-center">
+              <div class="text-xs text-slate-400 font-mono">Days to Departure:</div>
+              <div id="daysLeftDisplay" class="text-2xl font-black text-white font-mono mt-1">21 Days</div>
+            </div>
+            <div class="p-4 rounded-xl bg-slate-900 border border-indigo-500/30 text-center">
+              <div class="text-xs text-slate-400 font-mono">Drop Probability:</div>
+              <div id="probDisplay" class="text-2xl font-black text-indigo-400 font-mono mt-1">48%</div>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-xl bg-indigo-950/40 border border-indigo-500/20 text-xs text-indigo-200 space-y-1">
+            <div class="font-bold flex items-center gap-1.5 text-white">
+              <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              Decay Curve Intelligence:
+            </div>
+            <p id="decayAnalysisText" class="text-[11px] text-slate-300 leading-relaxed">
+              Departure is within 30-60 days. Historical airline yield management models indicate price volatility; waiting or monitoring is recommended over buying now.
+            </p>
+          </div>
+        </div>
+
+        <!-- Cheaper Alternative Dates Table (+/- 3 days) -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">
+              Flexible Alternative Dates (&plusmn;3 Days, &gt;15% Savings)
+            </h4>
+            <span class="text-[10px] font-mono text-emerald-400">DateSuggestionService.java</span>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border border-slate-800 rounded-xl overflow-hidden font-mono">
+              <thead class="bg-slate-900 text-slate-400">
+                <tr>
+                  <th class="p-3">Alternative Date</th>
+                  <th class="p-3">Estimated Price</th>
+                  <th class="p-3 text-emerald-400">Discount</th>
+                  <th class="p-3 text-right">Action</th>
+                </tr>
+              </thead>
+              <tbody id="altDatesBody" class="divide-y divide-slate-800 text-slate-300">
+                <!-- Dynamically generated rows -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Active Alerts List -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3">
+          <h4 class="text-xs font-bold text-slate-300 uppercase tracking-wider">Active Tracked Alert Routes</h4>
+          <div id="activeAlertsList" class="space-y-2 text-xs font-mono text-slate-400">
+            <!-- Dynamically populated from localStorage -->
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    let currentCurrency = '$';
+
+    function setRoute(origin, dest, curPrice, tgtPrice, curr = '$') {
+      document.getElementById('originInput').value = origin;
+      document.getElementById('destInput').value = dest;
+      document.getElementById('currentPriceInput').value = curPrice;
+      document.getElementById('targetPriceInput').value = tgtPrice;
+      currentCurrency = curr === 'INR' ? '₹' : '$';
+      calculateFlightPrediction();
+      showToast(`Selected route ${origin} -> ${dest}`, "info");
+    }
+
+    function calculateFlightPrediction() {
+      const origin = document.getElementById('originInput').value.trim().toUpperCase();
+      const dest = document.getElementById('destInput').value.trim().toUpperCase();
+      const depDateStr = document.getElementById('depDateInput').value;
+      const currentPrice = parseFloat(document.getElementById('currentPriceInput').value) || 0;
+      const targetPrice = parseFloat(document.getElementById('targetPriceInput').value) || 0;
+
+      const depTime = new Date(depDateStr).getTime();
+      const now = Date.now();
+      const daysLeft = Math.max(0, Math.ceil((depTime - now) / (1000 * 60 * 60 * 24)));
+
+      document.getElementById('daysLeftDisplay').innerText = `${daysLeft} Days`;
+
+      let prob = 0.10;
+      let rec = 'BUY NOW';
+      let badgeClass = 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40';
+      let analysis = 'Flight is departing in under 14 days. Airline revenue management models aggressively escalate seat prices close to departure. Purchasing now is recommended.';
+
+      if (daysLeft > 60) {
+        prob = 0.72;
+        rec = 'WAIT';
+        badgeClass = 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/40';
+        analysis = 'Departure is more than 60 days out. High probability (72%) of price drops or promotional flash sales during the upcoming cycle. Waiting is recommended.';
+      } else if (daysLeft >= 30) {
+        prob = 0.48;
+        rec = 'WAIT';
+        badgeClass = 'bg-blue-500/20 text-blue-300 border border-blue-500/40';
+        analysis = 'Departure is 30 to 60 days out. Fluctuation probability is 48%. Monitor prices closely with automated alerts before committing.';
+      } else if (daysLeft >= 14) {
+        prob = 0.28;
+        rec = 'MONITOR';
+        badgeClass = 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/40';
+        analysis = 'Departure is 14 to 30 days out. Volatility drops to 28%. If current fare meets target, locking in tickets is advisable.';
+      }
+
+      document.getElementById('probDisplay').innerText = `${Math.round(prob * 100)}%`;
+      const badge = document.getElementById('recommendationBadge');
+      badge.innerText = `${rec} (${Math.round(prob * 100)}% DROP PROBABILITY)`;
+      badge.className = `px-3 py-1 rounded-full text-xs font-bold font-mono ${badgeClass}`;
+      document.getElementById('decayAnalysisText').innerText = analysis;
+
+      // Generate Flexible Alternative Dates (+/- 3 days)
+      const altBody = document.getElementById('altDatesBody');
+      altBody.innerHTML = '';
+
+      const baseDate = new Date(depDateStr || Date.now());
+      const deltas = [-3, -2, -1, 1, 2, 3];
+      const discounts = [0.18, 0.05, 0.22, 0.08, 0.16, 0.09];
+
+      deltas.forEach((d, idx) => {
+        const disc = discounts[idx];
+        if (disc >= 0.15) {
+          const altDate = new Date(baseDate);
+          altDate.setDate(altDate.getDate() + d);
+          const dateStr = altDate.toISOString().split('T')[0];
+          const altPrice = Math.round(currentPrice * (1 - disc));
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="p-3 font-semibold text-white">${dateStr} (${d > 0 ? '+' : ''}${d}d)</td>
+            <td class="p-3 text-emerald-400 font-bold">${currentCurrency}${altPrice.toLocaleString()}</td>
+            <td class="p-3"><span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] font-bold">-${Math.round(disc * 100)}% Savings</span></td>
+            <td class="p-3 text-right">
+              <button onclick="applyAltDate('${dateStr}', ${altPrice})" class="px-2.5 py-1 rounded bg-slate-800 hover:bg-slate-700 text-indigo-300 text-[11px] transition">Select</button>
+            </td>
+          `;
+          altBody.appendChild(tr);
+        }
+      });
+    }
+
+    function applyAltDate(dateStr, price) {
+      document.getElementById('depDateInput').value = dateStr;
+      document.getElementById('currentPriceInput').value = price;
+      calculateFlightPrediction();
+      showToast(`Selected alternative cheaper date: ${dateStr}`, "success");
+    }
+
+    function saveActiveAlert() {
+      const origin = document.getElementById('originInput').value.trim().toUpperCase();
+      const dest = document.getElementById('destInput').value.trim().toUpperCase();
+      const date = document.getElementById('depDateInput').value;
+      const target = document.getElementById('targetPriceInput').value;
+      const email = document.getElementById('alertEmailInput').value.trim();
+
+      const alertItem = { id: `FLT-${origin}-${dest}-${Date.now().toString(36)}`, origin, dest, date, target, email, createdAt: new Date().toLocaleDateString() };
+      
+      let alerts = [];
+      try {
+        alerts = JSON.parse(localStorage.getItem('flight_alerts') || '[]');
+      } catch (e) { alerts = []; }
+
+      alerts.unshift(alertItem);
+      localStorage.setItem('flight_alerts', JSON.stringify(alerts.slice(0, 5)));
+      renderAlertsList();
+      showToast(`Price alert saved for ${origin} -> ${dest} (Target: ${currentCurrency}${target})`, "success");
+    }
+
+    function renderAlertsList() {
+      const container = document.getElementById('activeAlertsList');
+      let alerts = [];
+      try {
+        alerts = JSON.parse(localStorage.getItem('flight_alerts') || '[]');
+      } catch (e) { alerts = []; }
+
+      if (alerts.length === 0) {
+        container.innerHTML = '<div class="p-3 rounded-lg bg-slate-900 border border-slate-800 text-center text-slate-500">No active alerts configured. Use the form above to add route watches.</div>';
+        return;
+      }
+
+      container.innerHTML = alerts.map((a, idx) => `
+        <div class="p-3 rounded-xl bg-slate-900 border border-slate-800 flex items-center justify-between">
+          <div>
+            <strong class="text-white">${a.origin} &rarr; ${a.dest}</strong> • <span class="text-indigo-400">${a.date}</span>
+            <div class="text-[10px] text-slate-500 mt-0.5">Target: $${a.target} • Alert: ${a.email}</div>
+          </div>
+          <button onclick="deleteAlert(${idx})" class="text-red-400 hover:text-red-300 text-xs px-2 py-1">Remove</button>
+        </div>
+      `).join('');
+    }
+
+    function deleteAlert(idx) {
+      let alerts = JSON.parse(localStorage.getItem('flight_alerts') || '[]');
+      alerts.splice(idx, 1);
+      localStorage.setItem('flight_alerts', JSON.stringify(alerts));
+      renderAlertsList();
+      showToast("Alert removed", "info");
+    }
+
+    function triggerSimulatedEmailAlert() {
+      const origin = document.getElementById('originInput').value.trim().toUpperCase();
+      const dest = document.getElementById('destInput').value.trim().toUpperCase();
+      const cur = document.getElementById('currentPriceInput').value;
+      const email = document.getElementById('alertEmailInput').value.trim();
+      const refId = `FLT-${origin}-${dest}-${Date.now().toString(36).toUpperCase()}`;
+
+      showEmailModal({
+        to: email,
+        subject: `✈️ Flight Price Alert: ${origin} to ${dest} dropped to ${currentCurrency}${cur}!`,
+        refId: refId,
+        detailsHtml: `
+          <p>Great news, <strong>Nikhil Jain</strong>!</p>
+          <p>We detected an airfare price drop on your tracked route:</p>
+          <ul class="list-disc list-inside mt-2 space-y-1">
+            <li>Route: <strong>${origin} &rarr; ${dest}</strong></li>
+            <li>Current Price: <strong class="text-emerald-400">${currentCurrency}${cur}</strong></li>
+            <li>Status: <span class="text-emerald-400 font-bold">At or below target price!</span></li>
+            <li>Playwright Scraper Event: <code class="text-indigo-300">ScrapeResultEvent (Kafka)</code></li>
+          </ul>
+        `
+      });
+
+      showToast("Dispatched test price alert email!", "success");
+    }
+
+    window.onload = function() {
+      calculateFlightPrediction();
+      renderAlertsList();
+    };
+  </script>
+</body>
+</html>

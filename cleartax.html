@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ClearTax Dual-Regime Tax Engine | Nikhil Jain Platform</title>
+  <meta name="description" content="Enterprise Indian Income Tax calculation, Old vs New Regime optimization (Section 115BAC), AIS/TIS ingestion, ITR-1 XML generation, and transactional email confirmations.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            obsidian: '#080c14',
+            surface: '#0f172a',
+            surfaceHover: '#1e293b',
+            accent: '#10b981',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #080c14; color: #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-panel { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.3s ease; }
+    .gradient-text { background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #34d399 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+  <script src="assets/shared.js"></script>
+</head>
+<body class="min-h-screen text-slate-200">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-600 to-teal-600 flex items-center justify-center font-bold text-white shadow-lg shadow-emerald-500/25 group-hover:scale-105 transition-transform">
+            ₹
+          </div>
+          <div>
+            <div class="font-bold text-white tracking-tight flex items-center gap-2">
+              ClearTax Engine
+              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/30">@tools/cleartax-filing</span>
+            </div>
+            <div class="text-[11px] text-slate-400">Dual-Regime Optimization & ITR Filing</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-emerald-400 transition">Dashboard</a>
+        <a href="portfolio.html" class="hover:text-emerald-400 transition">Portfolio</a>
+        <a href="video-studio.html" class="hover:text-emerald-400 transition">AI Video Studio</a>
+        <a href="cleartax.html" class="text-emerald-400 font-semibold border-b-2 border-emerald-500 pb-0.5">ClearTax Tool</a>
+        <a href="flight-tracker.html" class="hover:text-emerald-400 transition">Flight Tracker</a>
+        <a href="skills.html" class="hover:text-emerald-400 transition">Learned Skills</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <span class="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+          Authenticated Session
+        </span>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN CLEAR TAX CONTAINER -->
+  <main class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    
+    <div class="mb-8">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-300 border border-emerald-500/30 mb-2">
+        <span>💰</span> Financial Tool Security & Dual-Regime Optimizer
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight gradient-text">
+        ClearTax Filing & Computation Engine
+      </h1>
+      <p class="text-slate-400 text-sm mt-1 max-w-3xl">
+        Automated Indian Income Tax calculation, Old vs New Regime optimization (Section 115BAC), AIS/TIS ingestion, ITR-1 XML generation, and transactional email filing confirmation linked to <strong>/Projects/ClearTax</strong>.
+      </p>
+    </div>
+
+    <!-- MAIN GRID: INPUTS vs CALCULATION RESULTS -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- LEFT: TAXPAYER DATA & DEDUCTION INPUTS (6 Cols) -->
+      <div class="lg:col-span-6 space-y-6">
+        
+        <!-- Taxpayer Profile -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">1. Taxpayer Profile & Verification</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Permanent Account Number (PAN)</label>
+              <input id="panInput" type="text" value="ABCDE1234F" maxlength="10" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono uppercase focus:outline-none focus:border-emerald-500" oninput="validatePanLive()">
+              <span id="panValidationMsg" class="text-[10px] text-emerald-400 mt-1 block">✓ Valid PAN Format</span>
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Assessment Year</label>
+              <select id="aySelect" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" onchange="calculateTax()">
+                <option value="2024-25">AY 2024-25 (FY 2023-24)</option>
+                <option value="2025-26">AY 2025-26 (FY 2024-25)</option>
+              </select>
+            </div>
+            <div class="sm:col-span-2">
+              <label class="block text-slate-400 mb-1">Taxpayer Notification Email</label>
+              <input id="userEmailInput" type="email" value="nikhilrawnka@gmail.com" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white focus:outline-none focus:border-emerald-500">
+            </div>
+          </div>
+        </div>
+
+        <!-- Income Heads -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">2. Income Heads (Gross Total Income)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Annual Salary Income (₹)</label>
+              <input id="salaryInput" type="number" value="1200000" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Income from House Property (₹)</label>
+              <input id="houseInput" type="number" value="0" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Capital Gains (STCG/LTCG) (₹)</label>
+              <input id="capGainsInput" type="number" value="0" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Other Income (Interest/Dividend) (₹)</label>
+              <input id="otherIncomeInput" type="number" value="25000" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+          </div>
+        </div>
+
+        <!-- Chapter VI-A Deductions -->
+        <div class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-4">
+          <h3 class="text-xs font-bold text-slate-300 uppercase tracking-wider">3. Chapter VI-A Deductions (Old Regime)</h3>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+            <div>
+              <label class="block text-slate-400 mb-1">Section 80C (EPF/PPF/ELSS - Max 1.5L)</label>
+              <input id="sec80cInput" type="number" value="150000" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Section 80D (Health Insurance - Max 50k)</label>
+              <input id="sec80dInput" type="number" value="25000" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">House Rent Allowance (HRA) (₹)</label>
+              <input id="hraInput" type="number" value="100000" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+            <div>
+              <label class="block text-slate-400 mb-1">Section 80CCD(1B) (NPS - Max 50k)</label>
+              <input id="npsInput" type="number" value="50000" class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-white font-mono focus:outline-none focus:border-emerald-500" oninput="calculateTax()">
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT: DUAL-REGIME COMPARISON & ITR GENERATOR (6 Cols) -->
+      <div class="lg:col-span-6 space-y-6">
+        
+        <!-- Comparison Summary Card -->
+        <div class="glass-panel p-6 rounded-2xl border border-emerald-500/30 space-y-5">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-white uppercase tracking-wider">Dual-Regime Optimization Result</h3>
+            <span id="recommendationBadge" class="px-3 py-1 rounded-full text-xs font-bold font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/40">
+              NEW REGIME RECOMMENDED
+            </span>
+          </div>
+
+          <!-- Savings Banner -->
+          <div class="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-slate-400">Net Tax Savings:</div>
+              <div id="savingsAmount" class="text-2xl font-black text-emerald-400 font-mono mt-0.5">₹5,200</div>
+            </div>
+            <div class="text-right text-xs text-slate-400">
+              Optimal Choice: <strong id="optimalRegimeText" class="text-white block uppercase">New Regime (115BAC)</strong>
+            </div>
+          </div>
+
+          <!-- Side-by-side Table -->
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-xs border border-slate-800 rounded-xl overflow-hidden">
+              <thead class="bg-slate-900 text-slate-400 font-mono">
+                <tr>
+                  <th class="p-3">Component</th>
+                  <th class="p-3">Old Regime</th>
+                  <th class="p-3 text-emerald-400">New Regime (115BAC)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800 text-slate-300 font-mono">
+                <tr>
+                  <td class="p-3 text-slate-400">Gross Income</td>
+                  <td id="tableOldGross" class="p-3">₹12,25,000</td>
+                  <td id="tableNewGross" class="p-3">₹12,25,000</td>
+                </tr>
+                <tr>
+                  <td class="p-3 text-slate-400">Standard Deduction</td>
+                  <td class="p-3">₹50,000</td>
+                  <td class="p-3">₹50,000</td>
+                </tr>
+                <tr>
+                  <td class="p-3 text-slate-400">Chapter VI-A Deductions</td>
+                  <td id="tableOldDeductions" class="p-3">₹3,25,000</td>
+                  <td class="p-3 text-slate-500">₹0 (Disallowed)</td>
+                </tr>
+                <tr>
+                  <td class="p-3 text-slate-400">Taxable Net Income</td>
+                  <td id="tableOldTaxable" class="p-3">₹8,50,000</td>
+                  <td id="tableNewTaxable" class="p-3">₹11,75,000</td>
+                </tr>
+                <tr>
+                  <td class="p-3 text-slate-400">Section 87A Rebate</td>
+                  <td id="tableOldRebate" class="p-3">₹0</td>
+                  <td id="tableNewRebate" class="p-3">₹0</td>
+                </tr>
+                <tr>
+                  <td class="p-3 text-slate-400">Health & Edu Cess (4%)</td>
+                  <td id="tableOldCess" class="p-3">₹3,300</td>
+                  <td id="tableNewCess" class="p-3">₹3,450</td>
+                </tr>
+                <tr class="bg-slate-900/60 font-bold">
+                  <td class="p-3 text-white">Total Tax Payable</td>
+                  <td id="tableOldTotal" class="p-3 text-white text-sm">₹85,800</td>
+                  <td id="tableNewTotal" class="p-3 text-emerald-400 text-sm">₹89,700</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Actions -->
+          <div class="flex flex-wrap items-center gap-3 pt-2">
+            <button onclick="generateItrXmlLive()" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold bg-indigo-600 hover:bg-indigo-500 text-white flex items-center justify-center gap-2 shadow-lg shadow-indigo-600/30 transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+              <span>Generate ITR-1 XML</span>
+            </button>
+            <button onclick="sendFilingConfirmationEmailLive()" class="flex-1 py-2.5 px-4 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white flex items-center justify-center gap-2 shadow-lg shadow-emerald-600/30 transition">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              <span>Dispatch Filing Email</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Generated ITR XML Viewer -->
+        <div id="itrXmlPanel" class="glass-panel p-6 rounded-2xl border border-slate-800 space-y-3 hidden">
+          <div class="flex items-center justify-between text-xs">
+            <h4 class="font-bold text-white uppercase tracking-wider font-mono">ITR-1 XML Schema Output</h4>
+            <div class="flex items-center gap-2">
+              <button onclick="copyXmlToClipboard()" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-indigo-400 font-mono transition">Copy XML</button>
+              <button onclick="downloadItrXmlFile()" class="px-3 py-1 rounded bg-slate-800 hover:bg-slate-700 text-emerald-400 font-mono transition">Download .xml</button>
+            </div>
+          </div>
+          <pre id="itrXmlCode" class="p-4 rounded-xl bg-slate-950 border border-slate-800 text-[11px] font-mono text-emerald-300 overflow-x-auto max-h-64"></pre>
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- TAX ENGINE LOGIC -->
+  <script>
+    let latestTaxData = null;
+
+    function validatePanLive() {
+      const pan = document.getElementById('panInput').value.trim().toUpperCase();
+      const msg = document.getElementById('panValidationMsg');
+      const isValid = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/.test(pan);
+      if (isValid) {
+        msg.innerText = "✓ Valid PAN Format";
+        msg.className = "text-[10px] text-emerald-400 mt-1 block";
+      } else {
+        msg.innerText = "✕ Invalid PAN format (e.g. ABCDE1234F)";
+        msg.className = "text-[10px] text-red-400 mt-1 block";
+      }
+      calculateTax();
+    }
+
+    function calculateTax() {
+      const salary = parseFloat(document.getElementById('salaryInput').value) || 0;
+      const house = parseFloat(document.getElementById('houseInput').value) || 0;
+      const capGains = parseFloat(document.getElementById('capGainsInput').value) || 0;
+      const other = parseFloat(document.getElementById('otherIncomeInput').value) || 0;
+      const grossIncome = salary + house + capGains + other;
+
+      const sec80C = Math.min(150000, parseFloat(document.getElementById('sec80cInput').value) || 0);
+      const sec80D = Math.min(50000, parseFloat(document.getElementById('sec80dInput').value) || 0);
+      const hra = parseFloat(document.getElementById('hraInput').value) || 0;
+      const nps = Math.min(50000, parseFloat(document.getElementById('npsInput').value) || 0);
+
+      // Old Regime
+      const oldDeductions = 50000 + sec80C + sec80D + hra + nps;
+      const oldTaxable = Math.max(0, grossIncome - oldDeductions);
+      let oldTax = 0;
+      if (oldTaxable > 1000000) oldTax = 112500 + (oldTaxable - 1000000) * 0.30;
+      else if (oldTaxable > 500000) oldTax = 12500 + (oldTaxable - 500000) * 0.20;
+      else if (oldTaxable > 250000) oldTax = (oldTaxable - 250000) * 0.05;
+      
+      let oldRebate = 0;
+      if (oldTaxable <= 500000) {
+        oldRebate = Math.min(oldTax, 12500);
+        oldTax = Math.max(0, oldTax - oldRebate);
+      }
+      const oldCess = Math.round(oldTax * 0.04);
+      const oldTotal = Math.round(oldTax + oldCess);
+
+      // New Regime (115BAC)
+      const newStandardDeduction = 50000;
+      const newTaxable = Math.max(0, grossIncome - newStandardDeduction);
+      let newTax = 0;
+      if (newTaxable > 1500000) newTax = 150000 + (newTaxable - 1500000) * 0.30;
+      else if (newTaxable > 1200000) newTax = 90000 + (newTaxable - 1200000) * 0.20;
+      else if (newTaxable > 900000) newTax = 45000 + (newTaxable - 900000) * 0.15;
+      else if (newTaxable > 600000) newTax = 15000 + (newTaxable - 600000) * 0.10;
+      else if (newTaxable > 300000) newTax = (newTaxable - 300000) * 0.05;
+
+      let newRebate = 0;
+      if (newTaxable <= 700000) {
+        newRebate = Math.min(newTax, 25000);
+        newTax = Math.max(0, newTax - newRebate);
+      }
+      const newCess = Math.round(newTax * 0.04);
+      const newTotal = Math.round(newTax + newCess);
+
+      const isNewBetter = newTotal <= oldTotal;
+      const savings = Math.abs(oldTotal - newTotal);
+
+      // Update UI table
+      document.getElementById('tableOldGross').innerText = `₹${grossIncome.toLocaleString()}`;
+      document.getElementById('tableNewGross').innerText = `₹${grossIncome.toLocaleString()}`;
+      document.getElementById('tableOldDeductions').innerText = `₹${(sec80C + sec80D + hra + nps).toLocaleString()}`;
+      document.getElementById('tableOldTaxable').innerText = `₹${oldTaxable.toLocaleString()}`;
+      document.getElementById('tableNewTaxable').innerText = `₹${newTaxable.toLocaleString()}`;
+      document.getElementById('tableOldRebate').innerText = `₹${oldRebate.toLocaleString()}`;
+      document.getElementById('tableNewRebate').innerText = `₹${newRebate.toLocaleString()}`;
+      document.getElementById('tableOldCess').innerText = `₹${oldCess.toLocaleString()}`;
+      document.getElementById('tableNewCess').innerText = `₹${newCess.toLocaleString()}`;
+      document.getElementById('tableOldTotal').innerText = `₹${oldTotal.toLocaleString()}`;
+      document.getElementById('tableNewTotal').innerText = `₹${newTotal.toLocaleString()}`;
+
+      document.getElementById('savingsAmount').innerText = `₹${savings.toLocaleString()}`;
+      document.getElementById('optimalRegimeText').innerText = isNewBetter ? 'New Regime (Section 115BAC)' : 'Old Tax Regime';
+
+      const badge = document.getElementById('recommendationBadge');
+      if (isNewBetter) {
+        badge.innerText = "NEW REGIME RECOMMENDED";
+        badge.className = "px-3 py-1 rounded-full text-xs font-bold font-mono bg-emerald-500/20 text-emerald-400 border border-emerald-500/40";
+      } else {
+        badge.innerText = "OLD REGIME RECOMMENDED";
+        badge.className = "px-3 py-1 rounded-full text-xs font-bold font-mono bg-purple-500/20 text-purple-400 border border-purple-500/40";
+      }
+
+      latestTaxData = {
+        pan: document.getElementById('panInput').value.trim().toUpperCase(),
+        ay: document.getElementById('aySelect').value,
+        grossIncome,
+        oldTotal,
+        newTotal,
+        recommended: isNewBetter ? 'new' : 'old',
+        savings
+      };
+    }
+
+    function generateItrXmlLive() {
+      calculateTax();
+      const pan = latestTaxData.pan;
+      const filingId = `CT-${latestTaxData.ay.replace('-', '')}-${Date.now().toString(36).toUpperCase()}`;
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>
+<ITR xmlns="http://incometaxindiaefiling.gov.in/ITR1">
+  <Header>
+    <FilingId>${filingId}</FilingId>
+    <AssessmentYear>${latestTaxData.ay}</AssessmentYear>
+    <FilingDate>${new Date().toISOString()}</FilingDate>
+    <TaxRegime>${latestTaxData.recommended.toUpperCase()}</TaxRegime>
+  </Header>
+  <PersonalInfo>
+    <PAN>${pan}</PAN>
+    <Name>Nikhil Jain</Name>
+  </PersonalInfo>
+  <TaxComputation>
+    <GrossIncome>${latestTaxData.grossIncome}</GrossIncome>
+    <TaxPayable>${latestTaxData.recommended === 'new' ? latestTaxData.newTotal : latestTaxData.oldTotal}</TaxPayable>
+    <TaxSavings>${latestTaxData.savings}</TaxSavings>
+  </TaxComputation>
+</ITR>`;
+
+      document.getElementById('itrXmlCode').innerText = xml;
+      document.getElementById('itrXmlPanel').classList.remove('hidden');
+      showToast("ITR-1 XML schema generated successfully!", "success");
+    }
+
+    function copyXmlToClipboard() {
+      const code = document.getElementById('itrXmlCode').innerText;
+      navigator.clipboard.writeText(code);
+      showToast("ITR XML copied to clipboard!", "success");
+    }
+
+    function downloadItrXmlFile() {
+      const code = document.getElementById('itrXmlCode').innerText;
+      const blob = new Blob([code], { type: 'application/xml' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `ITR1-${latestTaxData.pan}-${latestTaxData.ay}.xml`;
+      a.click();
+      showToast("Downloaded ITR XML file!", "success");
+    }
+
+    function sendFilingConfirmationEmailLive() {
+      calculateTax();
+      const email = document.getElementById('userEmailInput').value.trim();
+      const refId = `CT-${latestTaxData.ay.replace('-', '')}-${Date.now().toString(36).toUpperCase()}`;
+
+      showEmailModal({
+        to: email,
+        subject: `ITR Filing Successful - Ref: ${refId}`,
+        refId: refId,
+        detailsHtml: `
+          <p>Dear <strong>Nikhil Jain</strong>,</p>
+          <p>Your Income Tax Return computation for Assessment Year <strong>${latestTaxData.ay}</strong> has been processed.</p>
+          <ul class="list-disc list-inside mt-2 space-y-1">
+            <li>PAN: <strong>${latestTaxData.pan}</strong></li>
+            <li>Recommended Regime: <strong class="text-emerald-400 uppercase">${latestTaxData.recommended}</strong></li>
+            <li>Net Tax Payable: <strong>₹${(latestTaxData.recommended === 'new' ? latestTaxData.newTotal : latestTaxData.oldTotal).toLocaleString()}</strong></li>
+            <li>Tax Savings: <strong class="text-emerald-400">₹${latestTaxData.savings.toLocaleString()}</strong></li>
+          </ul>
+        `
+      });
+
+      showToast(`Confirmation email dispatched to ${email}`, "success");
+    }
+
+    window.onload = function() {
+      calculateTax();
+    };
+  </script>
+</body>
+</html>

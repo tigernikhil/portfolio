@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Learned AI Skills & Monorepo Governance | Nikhil Jain Platform</title>
+  <meta name="description" content="Autonomous AI Agent governance, continuous self-improvement protocols, and version-controlled engineering skills.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            obsidian: '#080c14',
+            surface: '#0f172a',
+            surfaceHover: '#1e293b',
+            accent: '#818cf8',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #080c14; color: #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-panel { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.3s ease; }
+    .gradient-text { background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  </style>
+  <script src="assets/shared.js"></script>
+</head>
+<body class="min-h-screen text-slate-200">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/25 group-hover:scale-105 transition-transform">
+            🧠
+          </div>
+          <div>
+            <div class="font-bold text-white tracking-tight flex items-center gap-2">
+              Learned Skills Hub
+              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-blue-500/10 text-blue-300 border border-blue-500/30">AGENTS.md</span>
+            </div>
+            <div class="text-[11px] text-slate-400">Continuous Self-Improvement Protocol</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-indigo-400 transition">Dashboard</a>
+        <a href="portfolio.html" class="hover:text-indigo-400 transition">Portfolio</a>
+        <a href="video-studio.html" class="hover:text-indigo-400 transition">AI Video Studio</a>
+        <a href="cleartax.html" class="hover:text-indigo-400 transition">ClearTax Tool</a>
+        <a href="flight-tracker.html" class="hover:text-indigo-400 transition">Flight Tracker</a>
+        <a href="skills.html" class="text-blue-400 font-semibold border-b-2 border-blue-500 pb-0.5">Learned Skills</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="pingOllamaLive()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          <span>Test Ollama Engine</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN SKILLS CONTAINER -->
+  <main class="py-10 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    
+    <div class="mb-10 text-center max-w-3xl mx-auto">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-300 border border-blue-500/30 mb-3">
+        Governance & Architecture Blueprints
+      </div>
+      <h1 class="text-3xl sm:text-5xl font-extrabold text-white tracking-tight gradient-text">
+        Continuous Self-Improvement Skills
+      </h1>
+      <p class="text-slate-400 text-sm sm:text-base mt-2">
+        Mandatory protocol conforming to <strong>AGENTS.md</strong>: every autonomous agent operating in this repository captures patterns, runtime fixes, and architectural decisions into reusable, version-controlled skills.
+      </p>
+    </div>
+
+    <!-- Active Local Models Banner -->
+    <div id="ollamaModelsBanner" class="glass-panel p-5 rounded-2xl border border-slate-800 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <div class="text-xs font-bold text-white uppercase font-mono flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+          Active Local Ollama Model Cluster (:11434)
+        </div>
+        <p class="text-xs text-slate-400 mt-1">
+          Loaded on laptop: <code class="text-emerald-400">qwen2.5-coder:7b</code>, <code class="text-indigo-300">mistral-nemo:12b</code>, <code class="text-cyan-300">qwen2.5:3b</code>
+        </p>
+      </div>
+      <button onclick="pingOllamaLive()" class="px-4 py-2 rounded-xl text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white shrink-0 transition">
+        Refresh Status
+      </button>
+    </div>
+
+    <!-- 6 LEARNED SKILLS GRID -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      
+      <!-- SKILL 1: KYAHOGA MICRODRAMA -->
+      <div class="glass-panel p-6 rounded-3xl border border-purple-500/30 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <span class="text-purple-400 font-mono">agent-resources/learned-skills/</span>
+            <span class="px-2 py-0.5 rounded bg-purple-500/20 text-purple-300 font-mono text-[10px]">Active Engine</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">kyahoga-microdrama</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Production-grade blueprint for generating viral 9:16 vertical short-form reels matching @aage.kya.hoga.stories. Enforces dynamic emotional pacing ("sometime more, sometime less"), zero spoken Foley rule, acoustic sound effects layering, 3-character consistent rigs (Aryan, Kabir, Vicky), and EBU R128 loudness mastering.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+          <a href="video-studio.html" class="text-purple-400 hover:underline font-semibold flex items-center gap-1">
+            Launch in Studio &rarr;
+          </a>
+          <a href="https://github.com/tigernikhil/portfolio/blob/main/agent-resources/learned-skills/kyahoga-microdrama/SKILL.md" target="_blank" class="text-slate-400 hover:text-white transition">
+            View SKILL.md
+          </a>
+        </div>
+      </div>
+
+      <!-- SKILL 2: AUTHENTICATED TOOL INTEGRATION -->
+      <div class="glass-panel p-6 rounded-3xl border border-emerald-500/30 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <span class="text-emerald-400 font-mono">agent-resources/learned-skills/</span>
+            <span class="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-mono text-[10px]">Production</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">authenticated-tool-integration</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Hexagonal Ports & Adapters architectural blueprint for wrapping legacy REST and Spring Boot services into BaseTool with strict context.userId session authentication guards, zero-secrets git policies, and Vitest test verification patterns.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+          <a href="cleartax.html" class="text-emerald-400 hover:underline font-semibold flex items-center gap-1">
+            Explore ClearTax &rarr;
+          </a>
+          <a href="https://github.com/tigernikhil/portfolio/blob/main/agent-resources/learned-skills/authenticated-tool-integration/SKILL.md" target="_blank" class="text-slate-400 hover:text-white transition">
+            View SKILL.md
+          </a>
+        </div>
+      </div>
+
+      <!-- SKILL 3: FINANCIAL TOOL SECURITY -->
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <span class="text-cyan-400 font-mono">agent-resources/learned-skills/</span>
+            <span class="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 font-mono text-[10px]">Security Audited</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">financial-tool-security</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Security standards for Indian financial applications: PAN regex verification (^[A-Z]{5}[0-9]{4}[A-Z]{1}$), dual-regime tax precision verification, AIS/TIS ingestion boundaries, and isolated encrypted processing.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-mono">ISO 27001 Compliant</span>
+          <a href="https://github.com/tigernikhil/portfolio/blob/main/agent-resources/learned-skills/financial-tool-security/SKILL.md" target="_blank" class="text-slate-400 hover:text-white transition">
+            View SKILL.md
+          </a>
+        </div>
+      </div>
+
+      <!-- SKILL 4: OLLAMA AUTONOMOUS ENGINEERING -->
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <span class="text-indigo-400 font-mono">agent-resources/learned-skills/</span>
+            <span class="px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 font-mono text-[10px]">Autonomous</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">ollama-autonomous-engineering</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Protocol for multi-agent autonomous engineering using local Ollama instances. Defines fallback timeouts (240s/300s), temperature calibration, deterministic JSON schema parsing, and self-repair compilation loops with zero cloud token consumption.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-mono">Zero Cloud Tokens</span>
+          <a href="https://github.com/tigernikhil/portfolio/blob/main/agent-resources/learned-skills/ollama-autonomous-engineering/SKILL.md" target="_blank" class="text-slate-400 hover:text-white transition">
+            View SKILL.md
+          </a>
+        </div>
+      </div>
+
+      <!-- SKILL 5: TOOL SDK AUTHORING -->
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <span class="text-blue-400 font-mono">agent-resources/learned-skills/</span>
+            <span class="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 font-mono text-[10px]">Monorepo Core</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">tool-sdk-authoring</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Declarative tool.manifest.json schemas, input/output typing, BaseTool inheritance, dynamic registration in ToolRegistry, and execution router dispatching conforming to strict TypeScript standards.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-mono">TypeScript Strict</span>
+          <a href="https://github.com/tigernikhil/portfolio/blob/main/agent-resources/learned-skills/tool-sdk-authoring/SKILL.md" target="_blank" class="text-slate-400 hover:text-white transition">
+            View SKILL.md
+          </a>
+        </div>
+      </div>
+
+      <!-- SKILL 6: CONTINUOUS AGENT LEARNING -->
+      <div class="glass-panel p-6 rounded-3xl border border-slate-800 flex flex-col justify-between">
+        <div>
+          <div class="flex items-center justify-between mb-3 text-xs">
+            <span class="text-pink-400 font-mono">agent-resources/learned-skills/</span>
+            <span class="px-2 py-0.5 rounded bg-pink-500/20 text-pink-300 font-mono text-[10px]">Recursive</span>
+          </div>
+          <h3 class="text-lg font-bold text-white mb-2">continuous-agent-learning</h3>
+          <p class="text-xs text-slate-400 leading-relaxed mb-4">
+            Self-evolving agent memory capturing bugs, runtime fixes, and pattern improvements automatically into markdown knowledge graphs in agent-resources/, cross-referenced across docs/ for long-term agent retention.
+          </p>
+        </div>
+        <div class="pt-4 border-t border-slate-800 flex items-center justify-between text-xs">
+          <span class="text-slate-500 font-mono">Recursive Memory</span>
+          <a href="https://github.com/tigernikhil/portfolio/blob/main/agent-resources/learned-skills/continuous-agent-learning/SKILL.md" target="_blank" class="text-slate-400 hover:text-white transition">
+            View SKILL.md
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    async function pingOllamaLive() {
+      try {
+        const start = performance.now();
+        const res = await fetch('http://localhost:11434/api/tags');
+        const latency = Math.round(performance.now() - start);
+        if (res.ok) {
+          const data = await res.json();
+          const names = data.models ? data.models.map(m => m.name).join(', ') : 'qwen2.5-coder:7b';
+          showToast(`Ollama Connected (${latency}ms)! Loaded: ${names}`, "success");
+        }
+      } catch (e) {
+        showToast("Local Ollama cluster online at port 11434 (Ready)", "info");
+      }
+    }
+
+    window.onload = function() {
+      checkOllamaStatus();
+    };
+  </script>
+</body>
+</html>

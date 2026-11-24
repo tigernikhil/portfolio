@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nikhil Jain | Principal Software AI Engineer & Distributed Systems Architect</title>
+  <meta name="description" content="Official Portfolio & Resume of Nikhil Jain - 11+ years building scalable distributed systems, Model Context Protocol (MCP) AI agents, and enterprise platforms across Oracle, Moonfrog Labs, Walmart Labs, and SAP Labs.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            obsidian: '#080c14',
+            surface: '#0f172a',
+            surfaceHover: '#1e293b',
+            accent: '#6366f1',
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { background-color: #080c14; color: #e2e8f0; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .glass-panel { background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.08); }
+    .glass-card { background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.06); transition: all 0.3s ease; }
+    .glass-card:hover { border-color: rgba(99, 102, 241, 0.4); transform: translateY(-2px); box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.15); }
+    .gradient-text { background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #818cf8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .gradient-accent { background: linear-gradient(135deg, #60a5fa 0%, #818cf8 50%, #c084fc 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    @media print {
+      body { background: white; color: black; }
+      nav, footer, .no-print { display: none !important; }
+      .glass-panel, .glass-card { background: none; border: 1px solid #ddd; color: black; }
+      .gradient-text, .gradient-accent { -webkit-text-fill-color: black; }
+    }
+  </style>
+  <script src="assets/shared.js"></script>
+</head>
+<body class="min-h-screen text-slate-200">
+
+  <!-- NAVIGATION -->
+  <nav class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-3 group">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-purple-600 flex items-center justify-center font-bold text-white shadow-lg shadow-indigo-500/25 group-hover:scale-105 transition-transform">
+            NJ
+          </div>
+          <div>
+            <div class="font-bold text-white tracking-tight flex items-center gap-2">
+              Nikhil Jain
+              <span class="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-indigo-500/10 text-indigo-400 border border-indigo-500/30">Principal AI</span>
+            </div>
+            <div class="text-[11px] text-slate-400">Portfolio & Executive Profile</div>
+          </div>
+        </a>
+      </div>
+
+      <div class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-300">
+        <a href="index.html" class="hover:text-indigo-400 transition">Dashboard</a>
+        <a href="portfolio.html" class="text-indigo-400 font-semibold border-b-2 border-indigo-500 pb-0.5">Portfolio</a>
+        <a href="video-studio.html" class="hover:text-indigo-400 transition flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-indigo-400"></span>
+          AI Video Studio
+        </a>
+        <a href="cleartax.html" class="hover:text-indigo-400 transition">ClearTax Tool</a>
+        <a href="flight-tracker.html" class="hover:text-indigo-400 transition">Flight Tracker</a>
+        <a href="skills.html" class="hover:text-indigo-400 transition">Learned Skills</a>
+      </div>
+
+      <div class="flex items-center gap-3">
+        <button onclick="sharePortfolio()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 flex items-center gap-1.5 transition">
+          <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"></path></svg>
+          <span>Share Link</span>
+        </button>
+        <button onclick="window.print()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-indigo-600 hover:bg-indigo-500 text-white flex items-center gap-1.5 shadow-md shadow-indigo-600/20 transition">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+          <span>Print / PDF</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO / EXECUTIVE PROFILE -->
+  <header class="pt-16 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <div class="lg:col-span-8 space-y-4">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-medium bg-indigo-500/10 text-indigo-300 border border-indigo-500/20">
+          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+          Principal Software AI Engineer • Distributed Systems Architect
+        </div>
+
+        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight gradient-text">
+          Nikhil Jain
+        </h1>
+
+        <p class="text-base sm:text-lg text-slate-300 leading-relaxed font-light">
+          Engineering professional with <strong class="text-white font-semibold">11+ years of experience</strong> building scalable distributed systems, high-concurrency applications, AI-powered engineering solutions and enterprise platforms across gaming, e-commerce, and cloud technology.
+        </p>
+
+        <div class="flex flex-wrap items-center gap-4 text-xs font-mono text-slate-400 pt-2">
+          <span class="flex items-center gap-1.5 text-slate-300"><strong class="text-indigo-400">📍</strong> Bangalore, India</span>
+          <span class="text-slate-600">•</span>
+          <a href="tel:+919460905919" class="hover:text-white transition flex items-center gap-1.5"><strong class="text-indigo-400">📞</strong> +91 9460905919</a>
+          <span class="text-slate-600">•</span>
+          <a href="mailto:nikhilrawnka@gmail.com" class="hover:text-white transition flex items-center gap-1.5"><strong class="text-indigo-400">✉️</strong> nikhilrawnka@gmail.com</a>
+          <span class="text-slate-600">•</span>
+          <a href="https://github.com/tigernikhil" target="_blank" class="hover:text-white transition flex items-center gap-1.5"><strong class="text-indigo-400">🐙</strong> github.com/tigernikhil</a>
+        </div>
+      </div>
+
+      <!-- Quick Metrics -->
+      <div class="lg:col-span-4 grid grid-cols-2 gap-3">
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold text-white font-mono">₹50L+</div>
+          <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-1">Monthly Uplift</div>
+        </div>
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold text-emerald-400 font-mono">100M+</div>
+          <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-1">App Downloads</div>
+        </div>
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold text-indigo-400 font-mono">~90%</div>
+          <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-1">Coin Sourcing Drop</div>
+        </div>
+        <div class="glass-card p-4 rounded-2xl border border-slate-800 text-center">
+          <div class="text-2xl sm:text-3xl font-extrabold text-purple-400 font-mono">11+ Yrs</div>
+          <div class="text-[11px] text-slate-400 uppercase tracking-wider mt-1">Enterprise Track</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- PROFESSIONAL EXPERIENCE -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="border-b border-slate-800 pb-4 mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-indigo-500"></span>
+        Professional Experience
+      </h2>
+    </div>
+
+    <div class="space-y-8">
+      
+      <!-- ORACLE -->
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-indigo-500/30">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+          <div>
+            <h3 class="text-xl font-bold text-white flex items-center gap-2">
+              ORACLE
+              <span class="text-xs font-mono font-normal px-2 py-0.5 rounded bg-indigo-500/20 text-indigo-300 border border-indigo-500/30">Current Role</span>
+            </h3>
+            <div class="text-sm font-semibold text-indigo-400 mt-0.5">Principal Software AI Engineer</div>
+          </div>
+          <div class="text-xs font-mono text-slate-400">August 2026 – Present • Bangalore, India</div>
+        </div>
+        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+          <li>Building <strong class="text-white">Model Context Protocol (MCP)</strong> tools and integrations to simplify developer workflows and enable autonomous AI-assisted engineering.</li>
+          <li>Developing and contributing to <strong class="text-white">Lumberjack MCP</strong> for application log research, issue investigation, and root-cause troubleshooting through AI workflows.</li>
+          <li>Working on <strong class="text-white">Telemetry MCP</strong> integrations to expose live observability metrics and telemetry directly to developer tools and AI agents.</li>
+          <li>Leveraging log and telemetry context to power automated test-case generation, security validation, code coverage, regression coverage, and software quality improvements.</li>
+          <li>Contributing to <strong class="text-white">Traffic as a Service (TaaS)</strong> and related developer productivity initiatives across engineering organizations.</li>
+        </ul>
+      </div>
+
+      <!-- MOONFROG LABS -->
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+          <div>
+            <h3 class="text-xl font-bold text-white">MOONFROG LABS – LUDO CLUB</h3>
+            <div class="text-sm font-semibold text-purple-400 mt-0.5">Senior Software Developer</div>
+          </div>
+          <div class="text-xs font-mono text-slate-400">August 2022 – August 2026 • Bangalore, India</div>
+        </div>
+        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+          <li>Designed and developed scalable backend services for <strong class="text-white">Ludo Club</strong>, a gaming platform with <strong class="text-emerald-400">100M+ Play Store downloads</strong> and <strong class="text-emerald-400">1M+ Daily Active Users (DAU)</strong>.</li>
+          <li>Delivered product and monetization improvements contributing to <strong class="text-emerald-400">₹50L+ monthly revenue uplift</strong> through store optimization and in-app feature enhancements.</li>
+          <li>Designed and improved matchmaking algorithms using player activity, gameplay history, and bet amounts, <strong class="text-emerald-400">reducing coin sourcing by approximately 90%</strong>.</li>
+          <li>Worked on game-economy improvements, including coin-sink solutions, to improve virtual currency circulation and gameplay balance.</li>
+          <li>Developed and enhanced bot gameplay logic using algorithmic approaches; drove improvements associated with approximately <strong class="text-white">₹18 Lakh in revenue impact</strong>.</li>
+          <li>Designed a reusable <strong class="text-white">Redis Sorted Set-based leaderboard platform</strong> supporting large-scale score updates, ranking, and retrieval for millions of participating players.</li>
+          <li>Developed major game features including Season Pass, purchasable packs, advertisements, and push notification integrations.</li>
+          <li>Contributed to application reliability improvements, <strong class="text-white">reducing crash rate from ~2% to 0.5%</strong>.</li>
+          <li>Built Jenkins automation and CI/CD pipelines, <strong class="text-white">reducing release effort from 2–3 days to 1–2 hours</strong>.</li>
+        </ul>
+      </div>
+
+      <!-- WALMART LABS -->
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+          <div>
+            <h3 class="text-xl font-bold text-white">WALMART LABS</h3>
+            <div class="text-sm font-semibold text-blue-400 mt-0.5">Senior Software Developer</div>
+          </div>
+          <div class="text-xs font-mono text-slate-400">June 2019 – August 2022 • Bangalore, India</div>
+        </div>
+        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+          <li>Designed and developed backend services and REST APIs using <strong class="text-white">Java and Spring Boot</strong> for large-scale retail and e-commerce systems.</li>
+          <li>Built scalable backend components supporting data-intensive business workflows and enterprise applications.</li>
+          <li>Worked on distributed processing systems handling <strong class="text-white">billions of records</strong>, focusing on reliable execution and high-throughput data processing.</li>
+          <li>Developed asynchronous task-processing capabilities using queue-based architectures and distributed worker execution.</li>
+        </ul>
+      </div>
+
+      <!-- SAP LABS -->
+      <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-4 border-b border-slate-800">
+          <div>
+            <h3 class="text-xl font-bold text-white">SAP LABS</h3>
+            <div class="text-sm font-semibold text-cyan-400 mt-0.5">Consultant / Lead Product Owner</div>
+          </div>
+          <div class="text-xs font-mono text-slate-400">October 2016 – June 2019 • Bangalore, India</div>
+        </div>
+        <ul class="mt-4 space-y-2 text-xs sm:text-sm text-slate-300 list-disc list-inside leading-relaxed">
+          <li>Delivered enterprise technology and digital transformation solutions; designed and deployed <strong class="text-white">35+ business dashboards</strong> supporting sales, finance, inventory, and operational reporting.</li>
+          <li>Contributed to digitization of <strong class="text-white">Tata Power's</strong> electric connection process, helping streamline customer-facing workflows.</li>
+          <li>Formulated UX strategy and solution delivery for <strong class="text-white">Finolex Industries</strong>, coordinating a team of four consultants and contributing to React.js application development.</li>
+          <li>Delivered international initiatives including projects for the International Organization for Migration in the Philippines and Sinarmas World Academy in Indonesia.</li>
+        </ul>
+      </div>
+
+      <!-- SUCCESSFACTORS -->
+      <div class="glass-panel p-6 rounded-2xl border border-slate-800/80">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-2 border-b border-slate-800/60">
+          <div>
+            <h3 class="text-base font-bold text-white">SUCCESSFACTORS – SAP</h3>
+            <div class="text-xs text-slate-400">Developer Intern</div>
+          </div>
+          <div class="text-xs font-mono text-slate-500">March 2016 – October 2016</div>
+        </div>
+        <p class="text-xs text-slate-400 mt-2">Contributed to software development activities within the enterprise HR technology ecosystem; supported backend bug-fixing, refactoring, and integration testing.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- CORE TECHNICAL SKILLS -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="border-b border-slate-800 pb-4 mb-8">
+      <h2 class="text-2xl sm:text-3xl font-bold text-white tracking-tight flex items-center gap-3">
+        <span class="w-2.5 h-2.5 rounded-full bg-purple-500"></span>
+        Core Technical Skills & Architecture
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div class="glass-card p-5 rounded-2xl border border-slate-800">
+        <h4 class="text-xs font-bold text-indigo-400 uppercase tracking-wider mb-2">Backend & Distributed</h4>
+        <div class="flex flex-wrap gap-1.5 text-xs text-slate-300">
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Java</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Spring Boot</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Microservices</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Distributed Systems</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">C++</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">TypeScript</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Asynchronous Queues</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-5 rounded-2xl border border-slate-800">
+        <h4 class="text-xs font-bold text-purple-400 uppercase tracking-wider mb-2">AI & Agents</h4>
+        <div class="flex flex-wrap gap-1.5 text-xs text-slate-300">
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Model Context Protocol (MCP)</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">MCP Servers & Tools</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Local Ollama LLMs</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Agent Tool Authoring</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Prompt Engineering</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-5 rounded-2xl border border-slate-800">
+        <h4 class="text-xs font-bold text-emerald-400 uppercase tracking-wider mb-2">Databases & Caching</h4>
+        <div class="flex flex-wrap gap-1.5 text-xs text-slate-300">
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Redis Sorted Sets</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">PostgreSQL</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">MongoDB</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Couchbase</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">SAP HANA</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Solr</span>
+        </div>
+      </div>
+
+      <div class="glass-card p-5 rounded-2xl border border-slate-800">
+        <h4 class="text-xs font-bold text-blue-400 uppercase tracking-wider mb-2">Observability & DevOps</h4>
+        <div class="flex flex-wrap gap-1.5 text-xs text-slate-300">
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Telemetry & Tracing</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Automated Test Gen</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Vitest</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Docker</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">Jenkins CI/CD</span>
+          <span class="px-2 py-1 rounded bg-slate-900 border border-slate-800">AWS / GCP</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div>
+        <div class="text-xs font-mono text-indigo-400 uppercase">Education</div>
+        <h3 class="text-xl font-bold text-white mt-1">Bachelor of Technology (B.Tech) – Computer Science and Engineering</h3>
+        <p class="text-xs text-slate-400 mt-0.5">Jaypee University of Engineering & Technology (JUET) • 2012 – 2016</p>
+      </div>
+      <div class="px-4 py-2 rounded-2xl bg-slate-900 border border-slate-700 text-center shrink-0">
+        <div class="text-2xl font-extrabold text-emerald-400 font-mono">81%</div>
+        <div class="text-[10px] text-slate-400 uppercase font-mono">Aggregate</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLATFORM PRODUCTS NAVIGATION CARDS -->
+  <section class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800/80">
+    <h3 class="text-xl font-bold text-white mb-6">Explore Nikhil's Integrated Platform Tools</h3>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <a href="video-studio.html" class="glass-card p-5 rounded-2xl border border-slate-800 group hover:border-purple-500/40">
+        <div class="text-2xl mb-2">🎬</div>
+        <h4 class="text-sm font-bold text-white group-hover:text-purple-400 transition">AI Video Studio</h4>
+        <p class="text-xs text-slate-400 mt-1">Local Ollama micro-drama generation engine with 9:16 canvas preview.</p>
+      </a>
+      <a href="cleartax.html" class="glass-card p-5 rounded-2xl border border-slate-800 group hover:border-emerald-500/40">
+        <div class="text-2xl mb-2">💰</div>
+        <h4 class="text-sm font-bold text-white group-hover:text-emerald-400 transition">ClearTax Dual-Regime</h4>
+        <p class="text-xs text-slate-400 mt-1">Interactive Indian income tax calculator, ITR XML, and email dispatch.</p>
+      </a>
+      <a href="flight-tracker.html" class="glass-card p-5 rounded-2xl border border-slate-800 group hover:border-indigo-500/40">
+        <div class="text-2xl mb-2">✈️</div>
+        <h4 class="text-sm font-bold text-white group-hover:text-indigo-400 transition">Flight Price Tracker</h4>
+        <p class="text-xs text-slate-400 mt-1">Predictive price drop decay curves and flexible date savings matrix.</p>
+      </a>
+      <a href="skills.html" class="glass-card p-5 rounded-2xl border border-slate-800 group hover:border-blue-500/40">
+        <div class="text-2xl mb-2">🧠</div>
+        <h4 class="text-sm font-bold text-white group-hover:text-blue-400 transition">Learned Skills Hub</h4>
+        <p class="text-xs text-slate-400 mt-1">6 self-improving agent skills conforming to monorepo AGENTS.md.</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto border-t border-slate-800 text-center text-xs text-slate-500 font-mono">
+    © 2026 Nikhil Jain • Principal Software AI Engineer • <a href="mailto:nikhilrawnka@gmail.com" class="text-indigo-400 hover:underline">nikhilrawnka@gmail.com</a> • Bangalore, India
+  </footer>
+
+  <script>
+    function sharePortfolio() {
+      const url = window.location.href;
+      navigator.clipboard.writeText(url).then(() => {
+        showToast("Portfolio link copied to clipboard! Ready to share.", "success");
+      }).catch(() => {
+        showToast("Shareable link: " + url, "info");
+      });
+    }
+  </script>
+</body>
+</html>
