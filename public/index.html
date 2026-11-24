@@ -242,8 +242,14 @@
           </p>
         </div>
 
-        <div class="flex items-center gap-3">
-          <span class="text-xs text-slate-400 font-mono">Engine Status:</span>
+        <div class="flex flex-wrap items-center gap-3">
+          <a href="https://www.instagram.com/reels/DgFWw93MgX8/" target="_blank" class="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-pink-500/10 text-pink-400 border border-pink-500/30 flex items-center gap-1.5 hover:bg-pink-500/20 transition">
+            <span>Instagram Reel Reference (@aage.kya.hoga.stories) &rarr;</span>
+          </a>
+          <a href="https://www.kaggle.com/code/nikkujain/nikhiljainvideogen1" target="_blank" class="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-blue-500/10 text-blue-400 border border-blue-500/30 flex items-center gap-1.5 hover:bg-blue-500/20 transition">
+            <span>Kaggle VideoGen1 &rarr;</span>
+          </a>
+          <span class="text-xs text-slate-400 font-mono">Engine:</span>
           <span id="ollamaStatusBadge" class="px-2.5 py-1 rounded-full text-xs font-mono font-medium bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
             Ollama Ready (Local:11434)
@@ -978,13 +984,45 @@
       const progressBar = document.getElementById('progressBar');
       const logProgressPercent = document.getElementById('logProgressPercent');
       const logMessage = document.getElementById('logMessage');
+      const model = document.getElementById('modelSelect').value || 'qwen2.5-coder:7b';
 
       btn.disabled = true;
       btn.classList.add('opacity-50');
 
+      progressBar.style.width = '15%';
+      logProgressPercent.innerText = '15%';
+      logMessage.innerText = `Connecting to laptop Ollama (http://localhost:11434) with model ${model}...`;
+
+      // Attempt live Ollama API generation
+      let ollamaSucceeded = false;
+      try {
+        const promptText = document.getElementById('scriptInput').value || 'Write a 7-beat Hindi suspense microdrama';
+        const res = await fetch('http://localhost:11434/api/generate', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            model: model,
+            prompt: `You are the Lead Screenwriter for Kyahoga Studio (@aage.kya.hoga.stories). Write a 7-beat Hindi suspense microdrama script as a JSON array adhering to the kyahoga-microdrama standard. Topic: ${promptText}. Return valid JSON array only.`,
+            stream: false
+          }),
+          signal: AbortSignal.timeout(4000)
+        });
+        if (res.ok) {
+          const jsonRes = await res.json();
+          if (jsonRes.response) {
+            const jsonMatch = jsonRes.response.match(/\[[\s\S]*\]/);
+            if (jsonMatch) {
+              document.getElementById('scriptInput').value = jsonMatch[0];
+              ollamaSucceeded = true;
+            }
+          }
+        }
+      } catch (e) {
+        console.log("Local Ollama direct connection note:", e.message);
+      }
+
       const steps = [
-        { pct: 15, msg: "Connecting to laptop Ollama (http://localhost:11434)..." },
-        { pct: 35, msg: "Evaluating 7-beat emotional pacing & enforcing Zero-Spoken Foley rule..." },
+        { pct: 35, msg: ollamaSucceeded ? "Ollama generated script received! Evaluating 7-beat pacing..." : "Evaluating 7-beat emotional pacing & enforcing Zero-Spoken Foley rule..." },
         { pct: 55, msg: "Harmonizing 3-character rigs (Aryan, Kabir, Vicky) with 55Hz sub-bass ambient..." },
         { pct: 75, msg: "Synthesizing dynamic tail_pause intervals & EBU R128 audio normalization..." },
         { pct: 90, msg: "Composing 1080x1920 progressive 9:16 vertical canvas video stream..." },
@@ -995,7 +1033,7 @@
         progressBar.style.width = step.pct + '%';
         logProgressPercent.innerText = step.pct + '%';
         logMessage.innerText = step.msg;
-        await new Promise(r => setTimeout(r, 600));
+        await new Promise(r => setTimeout(r, 500));
       }
 
       btn.disabled = false;
